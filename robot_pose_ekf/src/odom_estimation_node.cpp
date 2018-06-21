@@ -108,30 +108,30 @@ namespace estimation
 
     // subscribe to odom messages
     if (odom_used_){
-      ROS_INFO("Odom sensor can be used");
+      ROS_INFO("DEBUG: Odom sensor can be used");
       odom_sub_ = nh.subscribe("odom", 10, &OdomEstimationNode::odomCallback, this);
     }
-    else ROS_INFO("Odom sensor will NOT be used");
+    else ROS_INFO("DEBUG: Odom sensor will NOT be used");
 
     // subscribe to imu messages
     if (imu_used_){
-      ROS_INFO("Imu sensor can be used");
+      ROS_INFO("DEBUG: Imu sensor can be used");
       imu_sub_ = nh.subscribe("imu_data", 10,  &OdomEstimationNode::imuCallback, this);
     }
-    else ROS_INFO("Imu sensor will NOT be used");
+    else ROS_INFO("DEBUG: Imu sensor will NOT be used");
 
     // subscribe to vo messages
     if (vo_used_){
-      ROS_INFO("VO sensor can be used");
+      ROS_INFO("DEBUG: VO sensor can be used");
       vo_sub_ = nh.subscribe("vo", 10, &OdomEstimationNode::voCallback, this);
     }
-    else ROS_INFO("VO sensor will NOT be used");
+    else ROS_INFO("DEBUG: VO sensor will NOT be used");
 
     if (gps_used_){
-      ROS_INFO("GPS sensor can be used");
+      ROS_INFO("DEBUG: GPS sensor can be used");
       gps_sub_ = nh.subscribe("gps", 10, &OdomEstimationNode::gpsCallback, this);
     }
-    else ROS_INFO("GPS sensor will NOT be used");
+    else ROS_INFO("DEBUG: GPS sensor will NOT be used");
 
 
     // publish state service
@@ -174,7 +174,7 @@ namespace estimation
   {
     odom_callback_counter_++;
 
-    ROS_INFO("Odom callback at time %f ", ros::Time::now().toSec());
+    ROS_INFO("DEBUG: Odom callback at time %f ", ros::Time::now().toSec());
     assert(odom_used_);
 
     // receive data 
@@ -201,7 +201,7 @@ namespace estimation
 	odom_initializing_ = false;
 	ROS_INFO("Odom sensor activated");      
       }
-      else ROS_INFO("Waiting to activate Odom, because Odom measurements are still %f sec in the future.", 
+      else ROS_INFO("DEBUG: Waiting to activate Odom, because Odom measurements are still %f sec in the future.", 
 		    (odom_init_stamp_ - filter_stamp_).toSec());
     }
     
@@ -240,7 +240,7 @@ namespace estimation
       else if (my_filter_.isInitialized())
         ROS_WARN("Could not transform imu message from %s to %s. Imu will not be activated yet.", imu->header.frame_id.c_str(), base_footprint_frame_.c_str());
       else 
-        ROS_INFO("Could not transform imu message from %s to %s. Imu will not be activated yet.", imu->header.frame_id.c_str(), base_footprint_frame_.c_str());
+        ROS_INFO("DEBUG: Could not transform imu message from %s to %s. Imu will not be activated yet.", imu->header.frame_id.c_str(), base_footprint_frame_.c_str());
       return;
     }
     StampedTransform base_imu_offset;
@@ -272,7 +272,7 @@ namespace estimation
 	imu_initializing_ = false;
 	ROS_INFO("Imu sensor activated");      
       }
-      else ROS_INFO("Waiting to activate IMU, because IMU measurements are still %f sec in the future.", 
+      else ROS_INFO("DEBUG: Waiting to activate IMU, because IMU measurements are still %f sec in the future.", 
 		    (imu_init_stamp_ - filter_stamp_).toSec());
     }
     
@@ -315,7 +315,7 @@ namespace estimation
 	vo_initializing_ = false;
 	ROS_INFO("Vo sensor activated");      
       }
-      else ROS_INFO("Waiting to activate VO, because VO measurements are still %f sec in the future.", 
+      else ROS_INFO("DEBUG: Waiting to activate VO, because VO measurements are still %f sec in the future.", 
 		    (vo_init_stamp_ - filter_stamp_).toSec());
     }
     
@@ -356,7 +356,7 @@ namespace estimation
 	    gps_initializing_ = false;
 	    ROS_INFO("GPS sensor activated");      
       }
-      else ROS_INFO("Waiting to activate GPS, because GPS measurements are still %f sec in the future.", 
+      else ROS_INFO("DEBUG: Waiting to activate GPS, because GPS measurements are still %f sec in the future.", 
 		    (gps_init_stamp_ - filter_stamp_).toSec());
     }
     
@@ -371,7 +371,7 @@ namespace estimation
   // filter loop
   void OdomEstimationNode::spin(const ros::TimerEvent& e)
   {
-    ROS_INFO("Spin function at time %f", ros::Time::now().toSec());
+    ROS_INFO("DEBUG: Spin function at time %f", ros::Time::now().toSec());
 
     // check for timing problems
     if ( (odom_initializing_ || odom_active_) && (imu_initializing_ || imu_active_) ){
@@ -531,7 +531,7 @@ int main(int argc, char **argv)
 {
   // Initialize ROS
   ros::init(argc, argv, "robot_pose_ekf");
-  ROS_INFO("TEST");
+  ROS_INFO("DEBUG: TEST");
 
   // create filter class
   OdomEstimationNode my_filter_node;
