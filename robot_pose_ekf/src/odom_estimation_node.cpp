@@ -371,7 +371,7 @@ namespace estimation
   // filter loop
   void OdomEstimationNode::spin(const ros::TimerEvent& e)
   {
-    ROS_INFO("DEBUG: Spin function at time %f", ros::Time::now().toSec());
+    ROS_DEBUG("Spin function at time %f", ros::Time::now().toSec());
 
     // check for timing problems
     if ( (odom_initializing_ || odom_active_) && (imu_initializing_ || imu_active_) ){
