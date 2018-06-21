@@ -1,6 +1,6 @@
 <launch>
 
-<node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
+<node pkg="robot_pose_ekf1" type="robot_pose_ekf" name="robot_pose_ekf" output="screen">
   <param name="output_frame" value="odom_combined"/>
   <param name="base_footprint_frame" value="base_footprint"/>
   <param name="freq" value="30.0"/>
