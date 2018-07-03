@@ -174,7 +174,7 @@ namespace estimation
   {
     odom_callback_counter_++;
 
-    ROS_INFO("DEBUG: Odom callback at time %f ", ros::Time::now().toSec());
+    ROS_DEBUG("Odom callback at time %f ", ros::Time::now().toSec());
     assert(odom_used_);
 
     // receive data 
